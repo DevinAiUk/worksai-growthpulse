@@ -1,31 +1,22 @@
-# WorksAi GrowthPulse (`worksai-04`)
+# WorksAi GrowthPulse (`worksai-growthpulse`)
 
 > Cookie-free, GDPR-friendly web and funnel analytics SaaS with automated conversion drop-off diagnostics.
 
-**Category:** B. SaaS products  
-**License:** MIT (Derivative of [Umami](https://github.com/umami-software/umami) @ `559e3c6`)  
-**Portfolio Page:** `https://devinai.uk/worksai/products/worksai-growthpulse/`
+- **Live Subdomain Application:** [https://growthpulse.worksai.org](https://growthpulse.worksai.org)
+- **WorksAI Hub Specification:** [https://worksai.org/apps/worksai-growthpulse](https://worksai.org/apps/worksai-growthpulse)
+- **Category:** B. SaaS products
+- **License:** MIT (Derived from [Umami](https://github.com/umami-software/umami) @ `559e3c6`)
 
-## Value Proposition & Scope
-Replaces Google Analytics 4 complexity and Plausible's no-free-tier AGPLv3 pricing with an MIT-licensed, multi-tenant analytics platform featuring privacy-hashed visitor sessions, funnel drop-off detection, and MCP query tools.
+## Capability Matrix
+- **What You Can Do:** Evaluate multi-step conversion funnels (landing -> pricing -> signup) using cookieless daily-salted session hashes and identify largest stage drop-off bottlenecks.
+- **Deterministic Domain Utilities:** evaluateFunnelAndAnomalies (cookieless salted session hashing, stage conversion math, and daily event aggregation).
+- **Genuine AI Model Features:** Cloudflare Workers AI (@cf/meta/llama-3.1-8b-instruct) conversion bottleneck diagnosis and A/B hypothesis generation.
+- **Persisted R2/Neon Features:** Cookieless funnel telemetry summaries and anomaly snapshots persisted in Cloudflare R2 (workspaces/worksai-growthpulse/*) and Neon Postgres.
+- **Known Limitations:** Processes batch/webhook event streams; client-side script tag tracking requires adding the GrowthPulse beacon snippet to target sites.
 
-### What Works Out-of-the-Box (Zero External Credentials Required)
-Full event ingestion, privacy session hashing, funnel analysis, anomaly detection, and local SQLite/JSON persistence.
-
-### What Requires User Configuration (`.env.example`)
-`DATABASE_URL` (Neon Postgres) for multi-region cloud persistence; optional `OPENAI_API_KEY` for narrative executive emails.
-
-## Measurable Acceptance Criteria
-- AC-01: Ingests pageviews and custom events without storing raw IP addresses or setting client cookies (uses daily-salted SHA-256 session hashes).
-- AC-02: Computes multi-step funnel conversion rates and identifies the highest drop-off step accurately.
-- AC-03: Detects statistically significant traffic/conversion anomalies across daily time-series buckets.
-- AC-04: Enforces tenant `siteId` isolation and rate limits abusive event flood payloads.
-
-## Known Limitations
-- High-volume deployments (>50M monthly events) should pair PostgreSQL with ClickHouse to avoid table bloat.
-- Session replay heatmaps are excluded from the default privacy-first collector to preserve zero-cookie compliance.
-
-## Quick Start & Verification
+## Verification & Local Testing
 ```bash
+npm run lint
+npm run typecheck
 npm test
 ```
