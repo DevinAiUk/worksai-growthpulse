@@ -1,16 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>WorksAi GrowthPulse — WorksAi.org MIT Derivative</title>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>WorksAi GrowthPulse — Cookieless Funnel Analytics And Conversion Drop Off Analyzer | WorksAI</title>
+  <meta name="description" content="WorksAi GrowthPulse evaluates multi-stage conversion funnels (`landing -> pricing -> signup`) using daily-salted deterministic hashes of `(siteId, ip, userAge"/>
+  <link rel="canonical" href="https://growthpulse.worksai.org/"/>
+  <link rel="stylesheet" href="/assets/styles.css"/>
 </head>
-<body style="background:#090d14;color:#f5f7fa;font-family:system-ui,sans-serif;padding:2rem;">
-  <main style="max-width:860px;margin:0 auto;">
-    <p style="color:#00f0ff;font-size:12px;text-transform:uppercase;letter-spacing:0.08em;">worksai-04 · B. SaaS products</p>
-    <h1>WorksAi GrowthPulse</h1>
-    <p style="color:#b4bfd0;">Replaces Google Analytics 4 complexity and Plausible's no-free-tier AGPLv3 pricing with an MIT-licensed, multi-tenant analytics platform featuring privacy-hashed visitor sessions, funnel drop-off detection, and MCP query tools.</p>
-    <p style="font-size:12px;color:#7e8b9f;">MIT Derivative of <a href="https://github.com/umami-software/umami" style="color:#c6ff34;">Umami</a> (@ <code>559e3c6</code>) · Copyright (c) 2022 Umami Software, Inc. <hello@umami.is></p>
+<body>
+  <header class="app-topbar" role="banner">
+    <div class="brand-cluster">
+      <a href="https://worksai.org" style="display:flex;align-items:center;gap:0.45rem;color:#F8FAFC;font-weight:700;text-decoration:none;">
+        <span style="display:inline-flex;width:26px;height:26px;">__WORKSAI_CREST_PLACEHOLDER__</span>
+        <span>WorksAI</span>
+      </a>
+      <span style="color:#475569;">/</span>
+      <a href="/" style="color:#38BDF8;font-weight:700;text-decoration:none;">WorksAi GrowthPulse</a>
+      <span class="badge-pill" style="background:#1E293B;color:#94A3B8;">v1.2.0</span>
+    </div>
+    <nav aria-label="Application Navigation" style="display:flex;align-items:center;gap:0.85rem;flex-wrap:wrap;font-size:0.84rem;">
+      <a href="/" style="color:#38BDF8;font-weight:700;">Application Workspace</a>
+      <a href="/docs" style="color:#CBD5E1;">Documentation</a>
+      <a href="/guide" style="color:#CBD5E1;">Technical Guide &amp; FAQ</a>
+      <span id="authModeBadge" class="badge-pill badge-demo">DEMO SANDBOX</span>
+      <button type="button" id="authActionBtn" class="btn btn-ghost" style="padding:0.28rem 0.65rem;font-size:0.76rem;" onclick="window.WAI.openAuthModal()">Sign In to Workspace</button>
+    </nav>
+  </header>
+
+  <main class="workspace-shell" role="main">
+    <div id="statusBanner" class="toast-banner" role="status" aria-live="polite">
+      Ready • WorksAi GrowthPulse Interactive Environment Active
+    </div>
+    
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.75rem;margin-bottom:0.85rem;">
+          <div>
+            <h1 style="margin:0;font-size:1.35rem;">WorksAi GrowthPulse <span style="font-size:0.85rem;color:#94A3B8;font-weight:400;">— Cookie-free, GDPR-friendly web and funnel analytics SaaS with automated conversion drop-off diagnostics.</span></h1>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.5rem;">
+            <label for="projectTitleInput" style="font-size:0.75rem;color:#94A3B8;">Active Project:</label>
+            <input id="projectTitleInput" class="input-ctrl" style="width:230px;font-weight:600;" value="WorksAi GrowthPulse Starter Project"/>
+          </div>
+        </div>
+        
+    
+      <div class="kpi-strip" aria-label="SaaS Cohort and Funnel KPIs">
+        <div class="kpi-card"><div class="kpi-label">Projected Ending ARR</div><div class="kpi-val" id="gpArrVal" style="color:#10B981;">$1,420,000</div></div>
+        <div class="kpi-card"><div class="kpi-label">Net Dollar Retention (NRR)</div><div class="kpi-val" id="gpNrrVal" style="color:#38BDF8;">118.4%</div></div>
+        <div class="kpi-card"><div class="kpi-label">LTV : CAC Ratio</div><div class="kpi-val" id="gpLtvCacVal">6.4x</div></div>
+        <div class="kpi-card"><div class="kpi-label">CAC Payback Period</div><div class="kpi-val" id="gpPaybackVal">5.2 mo</div></div>
+      </div>
+      <div class="app-grid-3">
+        <!-- Left: Data-Source & Cohort Model Parameters -->
+        <aside class="panel-box" aria-label="Cohort Parameters and Saved Models">
+          <h2 class="panel-title"><span>Data Source &amp; Cohort Config</span></h2>
+          <div class="form-field"><label for="gpStartMrr">Starting MRR ($)</label><input id="gpStartMrr" type="number" class="input-ctrl" value="48000" oninput="window.WAI.recalcGrowthPulse()"/></div>
+          <div class="form-field"><label for="gpNewMrr">Monthly New Logo MRR ($)</label><input id="gpNewMrr" type="number" class="input-ctrl" value="6500" oninput="window.WAI.recalcGrowthPulse()"/></div>
+          <div class="form-field"><label for="gpExpPct">Monthly Expansion Rate (%)</label><input id="gpExpPct" type="number" step="0.1" class="input-ctrl" value="3.8" oninput="window.WAI.recalcGrowthPulse()"/></div>
+          <div class="form-field"><label for="gpChurnPct">Monthly Gross Logo Churn (%)</label><input id="gpChurnPct" type="number" step="0.1" class="input-ctrl" value="1.9" oninput="window.WAI.recalcGrowthPulse()"/></div>
+          <div class="form-field"><label for="gpHorizon">Forecast Horizon (Months)</label>
+            <select id="gpHorizon" class="input-ctrl" onchange="window.WAI.recalcGrowthPulse()">
+              <option value="6">6 Months</option>
+              <option value="12" selected>12 Months</option>
+            </select>
+          </div>
+          <hr style="border:none;border-top:1px solid #1E293B;margin:0.85rem 0;"/>
+          <h2 class="panel-title"><span>Saved Scenarios (R2)</span><button type="button" class="btn btn-ghost" onclick="window.WAI.newProject()">+ New</button></h2>
+          <div class="form-field"><label for="presetSelect">Load Benchmark Scenario</label><select id="presetSelect" class="input-ctrl" onchange="window.WAI.loadPreset(this.value)"></select></div>
+          <ul id="projectList" style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0.45rem;max-height:200px;overflow-y:auto;"></ul>
+        </aside>
+
+        <!-- Center: Interactive MRR Waterfall Chart & Cohort Retention Matrix -->
+        <section class="panel-box" aria-label="MRR Trajectory Chart and Cohort Retention Table">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem;margin-bottom:0.75rem;">
+            <div style="display:flex;gap:0.4rem;flex-wrap:wrap;">
+              <select id="gpSegmentFilter" class="input-ctrl" style="width:155px;" onchange="window.WAI.recalcGrowthPulse()">
+                <option value="all">All Segments (1.0x)</option>
+                <option value="enterprise">Enterprise (1.35x)</option>
+                <option value="selfserve">Self-Serve (0.75x)</option>
+              </select>
+              <select id="gpChannelFilter" class="input-ctrl" style="width:155px;" onchange="window.WAI.recalcGrowthPulse()">
+                <option value="all">All Channels</option>
+                <option value="plg">Product-Led (PLG)</option>
+                <option value="organic">Organic Search</option>
+                <option value="outbound">Outbound Sales</option>
+              </select>
+            </div>
+            <div style="display:flex;gap:0.4rem;">
+              <button type="button" class="btn btn-emerald" onclick="window.WAI.saveCurrentProject()">Save Scenario</button>
+              <button type="button" class="btn btn-primary" onclick="window.WAI.exportActiveProject('csv')">Export Cohort .CSV</button>
+            </div>
+          </div>
+          <div id="gpMrrChartContainer" style="background:#060A11;border:1px solid #1E293B;border-radius:10px;padding:0.75rem;margin-bottom:0.85rem;"></div>
+          <h3 style="margin:0 0 0.45rem;font-size:0.9rem;">Monthly Cohort Schedule &amp; Retention Waterfall</h3>
+          <div style="overflow-x:auto;max-height:260px;">
+            <table class="data-table" aria-label="Cohort Retention Schedule">
+              <thead><tr><th>Month</th><th>Starting MRR</th><th>New MRR</th><th>Expansion</th><th>Churned</th><th>Net Ending MRR</th><th>Retention %</th></tr></thead>
+              <tbody id="gpCohortTableBody"></tbody>
+            </table>
+          </div>
+          <textarea id="workspaceInput" rows="2" class="input-ctrl" style="display:none;"></textarea>
+        </section>
+
+        <!-- Right: Conversion Funnel & Bottleneck Diagnosis -->
+        <aside class="panel-box" aria-label="Conversion Funnel Analysis">
+          <h2 class="panel-title"><span>Acquisition-to-Paid Funnel</span></h2>
+          <div id="gpFunnelVisual" style="display:flex;flex-direction:column;gap:0.6rem;margin-bottom:0.9rem;"></div>
+          <button type="button" class="btn btn-purple" style="width:100%;justify-content:center;" onclick="window.WAI.runWithAiCopilot()">Run AI Cohort Diagnostics</button>
+          <div id="aiCopilotBox" style="margin-top:0.6rem;font-size:0.79rem;color:#A7F3D0;"></div>
+        </aside>
+      </div>
+    
   </main>
+
+  <!-- Server-Signed Authentication & Demo Sandbox Modal -->
+  <div id="authModalBackdrop" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="authModalTitle">
+    <div class="modal-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem;">
+        <h2 id="authModalTitle" style="margin:0;font-size:1.05rem;">Workspace Authentication (HMAC-SHA256)</h2>
+        <button type="button" class="btn btn-ghost" onclick="window.WAI.closeAuthModal()">Close</button>
+      </div>
+      <p style="font-size:0.8rem;color:#94A3B8;margin:0 0 0.85rem;">
+        Workspace identity is cryptographically signed on the server via WebCrypto HMAC-SHA256. Unauthenticated client headers are never trusted.
+      </p>
+      <form onsubmit="return window.WAI.submitSignIn(event)">
+        <div class="form-field"><label for="authEmailInput">Engineer Email *</label><input id="authEmailInput" type="email" class="input-ctrl" value="engineer@worksai.org" required/></div>
+        <div class="form-field"><label for="authTenantInput">Tenant Workspace Slug *</label><input id="authTenantInput" class="input-ctrl" value="tenant-acme-prod" required/></div>
+        <div class="form-field"><label for="authPasscodeInput">Workspace Passcode (min 6 chars) *</label><input id="authPasscodeInput" type="password" class="input-ctrl" value="worksai-2026" required/></div>
+        <div style="display:flex;gap:0.5rem;margin-top:0.85rem;">
+          <button type="submit" class="btn btn-primary" style="flex:1;justify-content:center;">Sign In (Server Token)</button>
+          <button type="button" class="btn btn-ghost" onclick="window.WAI.startDemoSession()">Use Isolated Demo</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    window.__WORKSAI_META__ = __WORKSAI_META_JSON__;
+    window.__WORKSAI_INITIAL__ = __WORKSAI_INITIAL_JSON__;
+  </script>
+  <script src="/assets/app.js"></script>
 </body>
 </html>
